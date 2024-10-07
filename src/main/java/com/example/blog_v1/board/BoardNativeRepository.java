@@ -1,6 +1,5 @@
-package com.example.blog_v1;
+package com.example.blog_v1.board;
 
-import com.example.blog_v1.board.Board;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;

@@ -1,12 +1,9 @@
-package com.example.blog_v1.controller;
+package com.example.blog_v1.board;
 
 
-import com.example.blog_v1.BoardNativeRepository;
-import com.example.blog_v1.board.Board;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,13 +18,27 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardController {
 
-    //DI
-    // @Autowired
+    // 네이티브 쿼리 연습
     private final BoardNativeRepository boardNativeRepository;
+    // JPA API , JPQL
+    private final BoardRepository boardRepository;
 
 //    public BoardController(BoardNativeRepository boardNativeRepository) {
 //        this.boardNativeRepository = boardNativeRepository;
 //    }
+
+    // 특정 게시글 요청 화면
+    // 주소설계 - http://localhost:8080/board/1
+    @GetMapping("/board/{id}")
+    public String detail(@PathVariable(name = "id") Integer id, HttpServletRequest request) {
+        // JPA API 사용
+        // Board board = boardRepository.findById(id);
+
+        // JPQL FETCH join 사용
+        Board board = boardRepository.findbyIdJoinUser(id);
+        request.setAttribute("board", board);
+        return "board/detail";
+    }
 
     @GetMapping("/")
     public String index(Model model) {
@@ -75,16 +86,6 @@ public class BoardController {
         boardNativeRepository.update(id, title, content);
 
         return "redirect:/board/" + id;
-    }
-
-    // 특정 게시글 요청 화면
-    // 주소 설계 - http://localhost:8080/board/10
-    @GetMapping("/board/{id}")
-    public String detail(@PathVariable Integer id, HttpServletRequest request) {
-        Board board = boardNativeRepository.findById(id);
-        request.setAttribute("board", board);
-
-        return "board/detail";
     }
 
     // form 태그에서는 GET, POST 방식만 지원하기 때문이다.

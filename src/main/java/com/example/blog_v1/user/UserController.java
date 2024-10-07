@@ -1,4 +1,4 @@
-package com.example.blog_v1.controller;
+package com.example.blog_v1.user;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
