@@ -1,0 +1,51 @@
+server:
+  servlet:
+    encoding:
+      charset: utf-8
+      force: true
+  port: 8080
+
+spring:
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+
+  mustache:
+    servlet:
+      expose-session-attributes: true  # Mustache ?? ?? ??
+      expose-request-attributes: true    # Mustache ?? ?? ??
+    prefix: file:src/main/resources/templates/  # Mustache ??? ?? ??
+
+  resources:
+    static-locations: file:src/main/resources/static/  # ?? ??? ?? ?? ??
+
+  datasource:
+    driver-class-name: org.h2.Driver    # H2 DB ???? ???
+    url: jdbc:h2:mem:test;MODE=MySQL    # H2 DB URL
+    username: sa                        # ??? ??
+    password:                           # ????
+  h2:
+    console:
+      enabled: true   # H2 ?? ???
+  sql:
+    init:
+      data-locations:
+        - classpath:db/data.sql  # ?? ??? SQL ?? ??
+  jpa:
+    hibernate:
+      ddl-auto: create            # DDL ?? ??
+    show-sql: true                # SQL ??
+    properties:
+      hibernate:
+        format_sql: true          # SQL ?? ??
+    defer-datasource-initialization: true  # JPA ??? ??
+
+  output:
+    ansi:
+      enabled: always  # ANSI ?? ?? ???
+
+logging:
+  level:
+    '[com.tenco.blog_jpa_step1]': DEBUG  # ??? ?? ?? ??
