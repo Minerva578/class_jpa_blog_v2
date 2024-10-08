@@ -19,9 +19,9 @@ public class Board {
     private String content;
 
     //@JsonBackReference("board-user")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private User user;  // 게시글 작성자 정보
+    private User user; // 게시글 작성자 정보
 
     // created_at 컬럼과 매핑하며, 이 필드는 데이터 저장시 자동으로 설정 됨
     @Column(name = "created_at", insertable = false, updatable = false)

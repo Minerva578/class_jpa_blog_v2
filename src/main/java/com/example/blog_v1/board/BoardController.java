@@ -42,11 +42,11 @@ public class BoardController {
 
     @GetMapping("/")
     public String index(Model model) {
-        List<Board> boradList = boardNativeRepository.findAll();
 
-        model.addAttribute("boardList", boradList);
-        log.warn("여기까지 오니");
-
+        //List<Board> boardList = boardNativeRepository.findAll();
+        // 코드 수정
+        List<Board> boardList = boardRepository.findAll();
+        model.addAttribute("boardList", boardList);
         return "index";
     }
 

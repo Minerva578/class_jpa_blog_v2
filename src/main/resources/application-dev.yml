@@ -14,38 +14,39 @@ spring:
 
   mustache:
     servlet:
-      expose-session-attributes: true  # Mustache ?? ?? ??
-      expose-request-attributes: true    # Mustache ?? ?? ??
-    prefix: file:src/main/resources/templates/  # Mustache ??? ?? ??
+      expose-session-attributes: true  # Mustache 세션 속성을 노출
+      expose-request-attributes: true    # Mustache 요청 속성을 노출
+    prefix: file:src/main/resources/templates/  # Mustache 템플릿 위치
 
   resources:
-    static-locations: file:src/main/resources/static/  # ?? ??? ?? ?? ??
+    static-locations: file:src/main/resources/static/  # 정적 리소스 위치
 
   datasource:
-    driver-class-name: org.h2.Driver    # H2 DB ???? ???
+    driver-class-name: org.h2.Driver    # H2 DB 드라이버 클래스
     url: jdbc:h2:mem:test;MODE=MySQL    # H2 DB URL
-    username: sa                        # ??? ??
-    password:                           # ????
+    username: sa                        # 사용자 이름
+    password:                           # 비밀번호
   h2:
     console:
-      enabled: true   # H2 ?? ???
+      enabled: true   # H2 콘솔 활성화
   sql:
     init:
       data-locations:
-        - classpath:db/data.sql  # ?? ??? SQL ?? ??
+        - classpath:db/data.sql  # 초기 데이터 SQL 파일 위치
   jpa:
     hibernate:
-      ddl-auto: create            # DDL ?? ??
-    show-sql: true                # SQL ??
+      ddl-auto: create            # DDL 자동 생성
+    show-sql: true                # SQL 출력
     properties:
       hibernate:
-        format_sql: true          # SQL ?? ??
-    defer-datasource-initialization: true  # JPA ??? ??
+        format_sql: true          # SQL 포맷 출력
+        default_batch_fetch_size: 10  # 한번에 가져오는 개수 설정
+    defer-datasource-initialization: true  # JPA 데이터 소스 초기화 지연
 
   output:
     ansi:
-      enabled: always  # ANSI ?? ?? ???
+      enabled: always  # ANSI 색상 출력 활성화
 
 logging:
   level:
-    '[com.tenco.blog_jpa_step1]': DEBUG  # ??? ?? ?? ??
+    '[com.tenco.blog_jpa_step1]': DEBUG  # 로그 레벨 설정
