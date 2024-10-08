@@ -17,6 +17,13 @@
             </form>
 
         </div>
+
+        {{#error}}
+        <div class="alert alert-danger mt-3" role="alert">
+            {{error}}
+            잘못된 요청입니다.
+        </div>
+        {{/error}}
     </div>
 
 </main>

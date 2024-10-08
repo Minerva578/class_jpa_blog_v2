@@ -1,7 +1,9 @@
 package com.example.blog_v1.board;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -41,5 +43,34 @@ public class BoardRepository {
     public List<Board> findAll() {
         TypedQuery<Board> jpql = em.createQuery(" SELECT b FROM board_tb b ORDER BY b.id DESC ", Board.class);
         return jpql.getResultList();
+    }
+
+    // em.persist(board) -> 비영속 상태인 엔티티를 영속상태로 전환
+    @Transactional
+    public Board save(Board board) {
+        em.persist(board);
+        return board;
+    }
+
+    /*
+    * 게시글 삭제하기
+    * @param id
+    * */
+    @Transactional
+    // DLETE JPA API 메서드를 활용(영속성 컨텍스트), JPQL --> QDSL .. namedQuery. ...
+    public void deleteById(Integer id) {
+        Query jpql = em.createQuery("delete from board_tb b where b.id = :id");
+        jpql.setParameter("id", id);
+        jpql.executeUpdate();
+    }
+
+    /**
+     *
+     *  JPA API 만들어 보기
+     */
+    // DELETE JPA API 메서드를 활용(영속성 컨텍트), JPQL --> QDSL .. namedQuery. ...
+    @Transactional // 트랜잭션 내에서 실행되도록 보장
+    public void deleteByIdJPA(int id) {
+
     }
 }

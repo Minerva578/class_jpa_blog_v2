@@ -19,7 +19,7 @@ public class Board {
     private String content;
 
     //@JsonBackReference("board-user")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user; // 게시글 작성자 정보
 
