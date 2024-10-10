@@ -1,13 +1,16 @@
 package com.example.blog_v1.user;
 
 import com.example.blog_v1.board.BoardDTO;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
@@ -18,7 +21,7 @@ public class UserController {
     private final UserRepository userRepository;
     private final HttpSession session;  // 세션 메모리지
 
-    /**
+    /*
      * 로그인 페이지 요청
      * 주소설계 : http://localhost:8080/login-form
      *
@@ -62,7 +65,7 @@ public class UserController {
         return "redirect:/";
     }
 
-    /**
+    /*
      * 회원가입 페이지 요청
      * 주소설계 : http://localhost:8080/join-form
      *
@@ -73,25 +76,50 @@ public class UserController {
      */
     @GetMapping("/join-form")
     public String joinForm(Model model) {
-        log.info("회원가입 페이지");
         model.addAttribute("name", "회원가입 페이지");
         return "user/join-form"; // 템플릿 경로 : user/join-form.mustache
     }
 
-    /**
+    @PostMapping("/join")
+    public String join(@ModelAttribute(name = "joinDTO") UserDTO.JoginDTO reqDto)  {
+        userRepository.save(reqDto.toEntity());
+        return "redirect:/login-form";
+    }
+
+    /*
      * 회원 정보 수정 페이지 요청
      * 주소설계 : http://localhost:8080/user/update-form
      *
-     * @param model
+     *
      * @return 문자열
      * 반환되는 문자열을 뷰 리졸버가 처리하며
      * 머스태치 템플릿 엔진을 통해서 뷰 파일을 렌더링 합니다.
      */
     @GetMapping("/user/update-form")
-    public String updateForm(Model model) {
+    public String updateForm(HttpServletRequest request) {
         log.info("회원 수정 페이지");
-        model.addAttribute("name", "회원 수정 페이지");
+
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        if(sessionUser == null) {
+            return "redirect:/login-form";
+        }
+        User user = userRepository.findById(sessionUser.getId());
+        request.setAttribute("user", user);
+
         return "user/update-form"; // 템플릿 경로 : user/join-form.mustache
     }
 
+    @PostMapping("/user/update")
+    public String update(@ModelAttribute(name = "updateDTO") UserDTO.UpdateDTO reqDTO) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        if (sessionUser == null) {
+            return "redirect:/login-form";
+        }
+        // 유효성 검사는 생략
+        // 사용자 정보 수정
+        User updatedUser = userRepository.updateById(sessionUser.getId(), reqDTO.getPassword(), reqDTO.getEmail());
+        // 세션 정보 동기화 처리
+        session.setAttribute("sessionUser", updatedUser);
+        return "redirect:/";
+    }
 }

@@ -44,4 +44,9 @@ public class User {
         this.createdAt = createdAt;
         this.boards = boards;
     }
+    // 순환참조오류
+    @Override
+    public String toString() {
+        return "User{id=" + id + ", username='" + username + "'}";
+    }
 }

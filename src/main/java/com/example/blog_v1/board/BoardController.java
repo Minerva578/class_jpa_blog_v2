@@ -59,12 +59,14 @@ public class BoardController {
     }
 
     // 게시글 수정 화면 요청
-    // board/{id}/update
+    // board/id/update
     @GetMapping("/board/{id}/update-form")
-    public String updateForm(@PathVariable Integer id, HttpServletRequest request) {
+    public String updateForm(@PathVariable(name = "id") Integer id, HttpServletRequest request) {
+        // 1. 게시글 조회
         Board board = boardNativeRepository.findById(id);
+        // 2. 요청 속성에 조회한 게시글 속성 및 값 추가
         request.setAttribute("board", board);
-
+        // 뷰 리졸브 - 템플릿 반환
         return "board/update-form"; // src/main/resources/templates/board/update-form.mustache
     }
 
@@ -73,7 +75,7 @@ public class BoardController {
     @PostMapping("/board/{id}/update")
     public String update(@PathVariable Integer id, @RequestParam String title, @RequestParam String content) {
 
-        boardNativeRepository.update(id, title, content);
+        boardRepository.updateV1(id, title, content);
 
         return "redirect:/board/" + id;
     }

@@ -1,7 +1,6 @@
 package com.example.blog_v1.board;
 
 import com.example.blog_v1.user.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -35,6 +34,10 @@ public class Board {
         this.user = user;
         this.createdAt = createdAt;
     }
-
+    // detail 메서드 순환 참조오류 해결
+    @Override
+    public String toString() {
+        return "Board{id=" + id + ", title='" + title + "', content='" + content + "'}";
+    }
 
 }

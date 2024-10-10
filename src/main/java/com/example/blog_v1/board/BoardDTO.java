@@ -19,4 +19,10 @@ public class BoardDTO {
         }
     }
 
+    @Data
+    public static class UpdateDTO {
+        private String username;
+        private String title;
+        private String content;
+    }
 }
