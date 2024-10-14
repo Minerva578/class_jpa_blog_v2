@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserRepository {
 
     private final EntityManager em;
-    
+
     /*
     * 유저 아이디를 찾아 반환하는 메서드
     * @param id

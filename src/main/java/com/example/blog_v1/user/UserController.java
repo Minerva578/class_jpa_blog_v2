@@ -1,16 +1,16 @@
 package com.example.blog_v1.user;
 
-import com.example.blog_v1.board.BoardDTO;
+import com.example.blog_v1.common.error.Exception500;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
@@ -82,7 +82,11 @@ public class UserController {
 
     @PostMapping("/join")
     public String join(@ModelAttribute(name = "joinDTO") UserDTO.JoginDTO reqDto)  {
-        userRepository.save(reqDto.toEntity());
+        try {
+            userRepository.save(reqDto.toEntity());
+        } catch (DataIntegrityViolationException e) {
+            throw new Exception500("올바른 정보가 아닙니다.");
+        }
         return "redirect:/login-form";
     }
 

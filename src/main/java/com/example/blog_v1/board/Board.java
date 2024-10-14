@@ -2,15 +2,14 @@ package com.example.blog_v1.board;
 
 import com.example.blog_v1.user.User;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Timestamp;
 
 @NoArgsConstructor
-@Data
 @Entity(name = "board_tb")
+@Getter
+@Setter
 public class Board {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) // 기본키 전략 db 위임
     private Integer id;
