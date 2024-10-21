@@ -25,7 +25,7 @@ public class BoardController {
     private final BoardService boardService; // BoardService 주입
     private final HttpSession session;
 
-    /**
+    /*
      * 게시글 수정 폼을 표시하는 메서드
      * 요청 주소: **GET http://localhost:8080/board/{id}/update-form**
      * 글 수정하기 페이지 요청 메서드
@@ -55,7 +55,7 @@ public class BoardController {
         return "board/update-form";
     }
 
-    /**
+    /*
      * 게시글 수정 처리 메서드
      * 요청 주소: **POST http://localhost:8080/board/{id}/update**
      *
@@ -79,7 +79,7 @@ public class BoardController {
     }
 
 
-    /**
+    /*
      * 게시글 삭제 처리 메서드
      * 요청 주소: **POST http://localhost:8080/board/{id}/delete**
      *
@@ -103,7 +103,7 @@ public class BoardController {
         return "redirect:/";
     }
 
-    /**
+    /*
      * 게시글 작성 폼을 표시하는 메서드
      * 요청 주소: **GET http://localhost:8080/board/save-form**
      *
@@ -116,7 +116,7 @@ public class BoardController {
     }
 
 
-    /**
+    /*
      * 게시글 작성 처리 메서드
      * 요청 주소: **POST http://localhost:8080/board/save**
      *
@@ -140,7 +140,7 @@ public class BoardController {
         return "redirect:/";
     }
 
-    /**
+    /*
      * 게시글 상세보기 처리 메서드
      * 요청 주소: **GET http://localhost:8080/board/{id}**
      *
@@ -169,7 +169,7 @@ public class BoardController {
     }
 
 
-    /**
+    /*
      * 메인 페이지를 표시하는 메서드
      * 요청 주소: **GET http://localhost:8080/**
      *
